@@ -38,7 +38,8 @@ export default {
             this.$refs[formName].validate((valid) => {
             if (valid) {
                 console.log('>>>' + this.login_form.username);
-                this.$router.push('/home');
+                // this.$router.push('/home');
+                this.$router.push({name: 'home', params: {username: this.login_form.username}});
             } else {
                 this.$message({
                     message: 'invalid user name or passcode',

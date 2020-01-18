@@ -1,12 +1,31 @@
 <template>
   <div>
-    user profile - {{$route.params.id}}
-    <input type="button" value="TT" @click="getData()" />
-    <el-table :data="mydat" style="width: 100%">
-      <el-table-column prop="updated" label="日期" width="180"></el-table-column>
-      <el-table-column prop="name" label="姓名" width="180"></el-table-column>
-      <el-table-column prop="status" label="Status"></el-table-column>
-    </el-table>
+    <el-row class="search-bar">
+      <el-col>
+      <el-input v-model="stext" style="width: 200px; " placeholder="name, soeid .." size="small" maxlength="20" show-word-limit autofocus="true">
+        <i slot="prefix" class="el-input__icon el-icon-search"></i>
+      </el-input>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="10">
+        <el-table :data="mydat" style="width: 90%">
+          <template slot="empty">
+            <div>No Data</div>
+          </template>          
+          <el-table-column prop="name" label="Name"></el-table-column>
+          <el-table-column prop="project" label="Project"></el-table-column>
+        </el-table>
+      </el-col>
+      <el-col :span="14">
+        <el-collapse>
+          <el-collapse-item title="Company Profile" name="1">
+            <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
+            <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
+          </el-collapse-item>
+        </el-collapse>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -16,13 +35,14 @@ export default {
   data() {
       return {
           mydat: [],
+          stext: '',
       };
   },
   methods: {
     getData() {
       this.axios({
         method: 'get',
-        url: 'http://localhost:8102/data.json',
+        url: 'http://localhost:8102/users.json',
       })
         .then((resp: any) => {
           this.mydat = resp.data;

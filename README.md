@@ -2,6 +2,8 @@
 ## Setup guide
 ``` bash
 # install all modules
+npm install -g cnpm --registry=https://registry.npm.taobao.org
+cnpm install -g @vue/cli
 cnpm install
 # build only
 npm run build

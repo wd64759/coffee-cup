@@ -1,52 +1,52 @@
 [
     {
-        "gname": "talents book",
+        "gname": "Talents",
         "expand": true,
         "subitems": [
             {
                 "id": "1",
-                "name": "profile",
+                "name": "Profile",
                 "link": "/user/profile/1"
             },
             {
                 "id": "2",
-                "name": "track",
+                "name": "Track",
                 "link": "/user/list"
             }
         ]
     },
     {
-        "gname": "project status",
+        "gname": "Projects",
         "subitems": [
             {
                 "id": "3",
-                "name": "release board",
+                "name": "Release board",
                 "link": "/project/jira"
             },
             {
                 "id": "4",
-                "name": "code changes",
+                "name": "Code changes",
                 "link": "/project/code"
             },            
             {
                 "id": "5",
-                "name": "roadmap",
+                "name": "Roadmap",
                 "link": "/track/project"
             }
         ]
     },
     {
-        "gname": "report",
+        "gname": "Environment",
         "expand": true,
         "subitems": [
             {
                 "id": "6",
-                "name": "board",
+                "name": "Board",
                 "link": "/report/board"
             },
             {
                 "id": "7",
-                "name": "setting",
+                "name": "Setting",
                 "link": "/report/setting"
             }
         ]

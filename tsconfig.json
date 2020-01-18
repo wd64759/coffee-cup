@@ -10,7 +10,10 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
+    // 忽略 this 的类型检查 
+    "noImplicitThis": false,
     "baseUrl": ".",
+    "pretty": true,
     "types": [
       "webpack-env",
       "mocha",

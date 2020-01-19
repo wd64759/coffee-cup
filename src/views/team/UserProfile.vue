@@ -1,5 +1,14 @@
 <template>
   <div>
+    <el-row>
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item :to="{ path: '/' }">Staff</el-breadcrumb-item>
+        <el-breadcrumb-item>
+          <a href="/">Overview</a>
+        </el-breadcrumb-item>
+      </el-breadcrumb>
+      <el-divider></el-divider>
+    </el-row>    
     <el-row class="search-bar">
       <el-col>
       <el-input v-model="stext" style="width: 200px; " placeholder="name, soeid .." size="small" maxlength="20" show-word-limit autofocus="true">
@@ -29,6 +38,10 @@
   </div>
 </template>
 
+<style > 
+
+</style>
+
 <script lang="ts">
 export default {
   name: 'UserProfile',
@@ -55,6 +68,9 @@ export default {
 };
 </script>
 
-<style lang="sass">
-
+<style lang="scss" scoped>
+>>> .el-divider {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 </style>

@@ -1,53 +1,49 @@
 [
     {
-        "gname": "Talents",
-        "expand": true,
+        "name": "Staff",
         "subitems": [
             {
-                "id": "1",
-                "name": "Profile",
+                "name": "Overview",
                 "link": "/user/profile/1"
-            },
-            {
-                "id": "2",
-                "name": "Track",
-                "link": "/user/list"
             }
         ]
     },
     {
-        "gname": "Projects",
+        "name": "Project",
         "subitems": [
             {
-                "id": "3",
-                "name": "Release board",
-                "link": "/project/jira"
-            },
-            {
-                "id": "4",
-                "name": "Code changes",
-                "link": "/project/code"
-            },            
-            {
-                "id": "5",
-                "name": "Roadmap",
-                "link": "/track/project"
-            }
-        ]
-    },
-    {
-        "gname": "Environment",
-        "expand": true,
-        "subitems": [
-            {
-                "id": "6",
                 "name": "Board",
-                "link": "/report/board"
+                "link": "/project/all"
             },
             {
-                "id": "7",
-                "name": "Setting",
-                "link": "/report/setting"
+                "name": "Workspace",
+                "subitems": [
+                    {
+                        "name": "Origination Center",
+                        "link": "/project/oc"
+                    },
+                    {
+                        "name": "Client Portal",
+                        "link": "/report/cp"
+                    },
+                    {
+                        "name": "DealTRAX",
+                        "link": "/report/dt"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "My",
+        "subitems": [
+            {
+                "name": "Note",
+                "link": "/util/note"
+            },
+            {
+                "name": "Document",
+                "link": "/util/doc"
             }
         ]
     }      

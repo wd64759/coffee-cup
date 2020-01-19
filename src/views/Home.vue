@@ -1,48 +1,42 @@
 <template>
-  <div class='home'>
+  <div class="home">
     <!-- <img alt='Vue logo' src='../assets/logo.png'> -->
     <el-container>
-      <el-header style="height: 50px">
-        <el-row class="search-bar">
-          <el-col :span="1" style="text-align: left;padding-top: 10px;">
-            <el-dropdown>
-              <i class='el-icon-setting'></i>
-              <el-dropdown-menu slot='dropdown'>
-                <el-dropdown-item>Logout</el-dropdown-item>
-                <el-dropdown-item>Setting</el-dropdown-item>
-              </el-dropdown-menu>
-              <span>{{username}}</span>
-            </el-dropdown>
-          </el-col>          
-          <el-col :span="23" style="padding-left:12px;">
-            <template>
-              <el-tabs v-model="activeName" @tab-click="handleClick">
-                <el-tab-pane label="Events" name="first"></el-tab-pane>
-                <el-tab-pane label="Follow-up" name="second"></el-tab-pane>
-              </el-tabs>
-            </template>
-          </el-col>
-        </el-row>
+      <el-header>
+        <el-menu
+          mode="horizontal"
+          @select="handleSelect"
+          background-color="#545c64"
+          text-color="#fff"
+          active-text-color="#ffd04b"
+        >
+          <el-submenu v-for="mg in menuGrp" :index="mg.id" :key="mg.id">
+            <template slot="title">{{ mg.name }}</template>
+            <el-menu-item v-for="mt in mg.subitems" :key="mt.id" :index="mt.id">
+              <el-submenu :index="'menu ' + mt.id" v-if="mt.subitems">
+                <template slot="title">{{ mt.name }}</template>
+                <el-menu-item
+                  v-for="st in mt.subitems"
+                  :key="st.id"
+                  :index="st.id"
+                >{{ st.name }}</el-menu-item>
+              </el-submenu>
+              <span v-else>{{ mt.name }}</span>
+            </el-menu-item>
+          </el-submenu>
+        </el-menu>
       </el-header>
       <el-container>
-        <el-aside width='200px'>
-          <el-menu v-for='(mg,mi) in menuGrp' :key='mg.gname' :default-openeds="mg.expand ? [''+ mi]:[]">
-            <el-submenu :index="''+ mi">
-              <template slot='title'>
-                <i class='el-icon-circle-plus-outline'></i>
-                {{ mg.gname }}
-              </template>
-              <el-menu-item v-for="(mt, i) in mg.subitems" :key='mt.id' :index="''+ i">
-                <router-link :to='mt.link'>{{ mt.name }}</router-link>
-              </el-menu-item>
-            </el-submenu>
-          </el-menu>
+        <el-aside width="200px">
+          <div>Left Menu</div>
         </el-aside>
         <el-main>
           <el-row style="padding-bottom: 8px">
             <el-breadcrumb separator="/">
               <el-breadcrumb-item :to="{ path: '/' }">Talents</el-breadcrumb-item>
-              <el-breadcrumb-item><a href="/">Profile</a></el-breadcrumb-item>
+              <el-breadcrumb-item>
+                <a href="/">Profile</a>
+              </el-breadcrumb-item>
             </el-breadcrumb>
           </el-row>
           <router-view />
@@ -78,6 +72,7 @@
 <script>
 // @ is an alias to /src
 import Home from '@/components/Home.vue';
+import router from '../router';
 
 export default {
   props: ['username'],
@@ -88,13 +83,17 @@ export default {
   data() {
     return {
       menuGrp: [],
+      menuLinks: new Map(),
       tsearch: '',
       activeName: 'second',
     };
   },
   methods: {
-    handleClick(tab, event) {
-        console.log(tab, event);
+    handleSelect(routerID) {
+      const navLink = this.menuLinks.get(routerID);
+      if (navLink) {
+        this.$router.push(navLink);
+      }
     },
   },
   created() {
@@ -103,7 +102,20 @@ export default {
       url: 'http://localhost:8102/left_menu.json',
     })
       .then((resp) => {
+        function buildMenu(menuconfig, pid, menuLinks) {
+          const prefix = pid !== '' ? pid + '-' : '';
+          menuconfig.forEach((mitem, idx) => {
+            mitem.id = prefix + idx;
+            if (mitem.hasOwnProperty('link')) {
+              menuLinks.set(mitem.id, mitem.link);
+            }
+            if (mitem.hasOwnProperty('subitems')) {
+              buildMenu(mitem.subitems, mitem.id, menuLinks);
+            }
+          });
+        }
         this.menuGrp = resp.data;
+        buildMenu(this.menuGrp, '', this.menuLinks);
       })
       .catch((err) => {
         console.log(err);
